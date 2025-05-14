@@ -1,10 +1,8 @@
 import pytest
 import tempfile
 import os
-from main import read_csv, generate_payout_report
+from main import read_csv, generate_payout_report, get_rate_column
 
-
-# Вспомогательная функция для создания временного файла с содержимым
 def create_temp_csv(content_lines):
     tmp_file = tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.csv', encoding='utf-8')
     tmp_file.write('\n'.join(content_lines))
@@ -58,7 +56,6 @@ def test_generate_payout_report(capsys):
     captured = capsys.readouterr()
     output_lines = captured.out.strip().split('\n')
 
-    # Проверка наличия общего количества сотрудников и суммы выплат
     assert any("Общее количество сотрудников" in line for line in output_lines)
     assert any("Общий фонд оплаты труда" in line for line in output_lines)
 

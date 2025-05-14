@@ -7,7 +7,7 @@ def parse_args():
     parser.add_argument('files', nargs='+', help='Пути к CSV файлам с данными сотрудников')
     parser.add_argument('--report', required=True, choices=['payout'], help='Тип отчета')
     return parser.parse_args()
-#Читает CSV-файл и возвращает список словарей или список строк с данными сотрудников.
+
 def read_csv(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         lines = f.read().splitlines()
@@ -42,7 +42,6 @@ def generate_payout_report(files):
         if not data:
             continue
 
-        # Определяем название колонки со ставкой
         headers = data[0].keys()
         rate_col = get_rate_column(headers)
 
@@ -56,10 +55,8 @@ def generate_payout_report(files):
                 total_payout += payout
                 employees_count += 1
             except (ValueError, TypeError):
-                # пропускаем некорректные строки
                 continue
 
-    # Формируем вывод
     print(f"Общее количество сотрудников: {employees_count}")
     print(f"Общий фонд оплаты труда: {total_payout:.2f} руб.")
 
